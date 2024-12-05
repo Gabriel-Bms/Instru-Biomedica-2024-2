@@ -112,47 +112,65 @@ def calculate_features(a):
     return features
 
 def main_page():
-    file_id = "168KiDRD-k8AVo7LbwPcvKbOEN-rSJ9sT"
+    file_id = "190ygOr_J1pqLwvTAXkHMDNyd7Qi5rjS1"
     url = f"https://drive.google.com/uc?export=view&id={file_id}"
     response = requests.get(url)
     # Fondo personalizado
-    # Limitar estilos solo a esta página
     st.markdown("""
         <style>
-        .main-background {
-            background-image: url("https://i.pinimg.com/1200x/3a/35/21/3a35216f1bad1af68a7b77375d45a168.jpg");
+        .stApp {
+            background-image: url("https://img.freepik.com/free-vector/white-abstract-wallpaper_23-2148830027.jpg?t=st=1733431935~exp=1733435535~hmac=7a1d6c26a9eaf01430a8158fd41328553c361e432a078ca188b6ec9f7952d15f&w=996");
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
         }
         </style>
-    """, unsafe_allow_html=True)
+        """, unsafe_allow_html=True)
     st.markdown('<div class="main-background">', unsafe_allow_html=True)
     
-    #st.markdown("""
-    #    <style>
-    #    @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
-    #    .title {
-    #        font-size: 84px;
-    #        font-family: 'Comic Neue', sans-serif; 
-    #        color: #FFFFFF;
-    #        text-align: left; 
-    #        margin-bottom: 30px;
-    #    }
-    #    </style>
-    #""", unsafe_allow_html=True)
-
-    #st.markdown('<h1 class="title">CardioArc:<br>Monitor portatil de ECG/EKG</h1>', unsafe_allow_html=True)
-    #col1, col2 = st.columns([1, 2])
-    #with col1: 
-    #    st.image(response.content,width=400)
-    #with col2:
-    #    st.markdown("""
-    #    <div style="background-color: rgba(255,255,255,0.2); padding: 20px; border-radius: 15px;">
-    #        <h3 style="color: #000;">Monitor de ECG Portatil</h3>
-    #        <p>Este monitor ....<br><br> demostrando su uso y eficacia.</p>
-    #    </div>
-    #    """, unsafe_allow_html=True)
+    st.markdown("""
+        <style>
+        @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet');
+        @import url('https://fonts.googleapis.com/css2?family=Bree+Serif&family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet');
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet');
+        .title {
+            font-size: 80px;
+            font-family: 'Poppins', sans-serif; 
+            color: #FD5901;
+            text-align: left;
+            font-weight: 800; 
+            margin-bottom: 5px;
+        }
+        .subtitle {
+            font-size: 40px; 
+            color: #000000; 
+            text-align: left;
+            margin-top: 0px;
+            font-family: "Bree Serif", serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+        .text-normal {
+            font-size: 20px;
+            font-family: 'Montserrat', sans-serif; 
+            color: #000000; 
+            text-align: justify;
+            line-height: 1.6;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+        </style>
+        """, unsafe_allow_html=True)
+    
+    st.markdown('<h1 class="title">CardioArc</h1>', unsafe_allow_html=True)
+    st.markdown('<p class="subtitle">Dispositivo portátil ECG de 3 derivaciones con Inteligencia Artificial</p>', unsafe_allow_html=True)
+    col1, col2 = st.columns([3,1])
+    with col1:
+        st.markdown('<p class="text-normal">Este dispositivo utiliza algoritmos avanzados de inteligencia artificial para detectar arritmias cardíacas. Su diseño portátil permite un diagnóstico rápido y preciso en diferentes entornos clínicos, mejorando la calidad del cuidado del paciente.</p>', unsafe_allow_html=True)
+    with col2: 
+        st.image(response.content,width=300)
+    
 
 def visualize_page():
     # Inicializar variables de estado para la gráfica
@@ -360,7 +378,7 @@ selected = option_menu(
     default_index=0,
     orientation="horizontal",
     styles={
-        "container": {"padding": "0.5rem", "background-color": "#36454f","width": "100%"},
+        "container": {"padding": "0.5rem", "background-color": "#005F60","width": "100%"},
         "nav-link-selected": {"background-color": "#fb8b24", "color": "#faf0e6"},  
     },
 )
