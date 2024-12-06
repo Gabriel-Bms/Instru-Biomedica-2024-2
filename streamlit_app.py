@@ -19,6 +19,14 @@ from hrvanalysis import get_sampen, get_time_domain_features
 
 st.set_page_config(page_title="main", layout="wide",initial_sidebar_state="collapsed",)
 firebase_url = "https://esp32-ib-default-rtdb.firebaseio.com/testeo.json"
+hide_streamlit_style = """
+<style>
+    #root > div:nth-child(1) > div > div > div > div > section > div {padding-top: 0rem;}
+</style>
+
+"""
+st.markdown(hide_streamlit_style, unsafe_allow_html=True)
+
 with open("model_xgb_new.pkl", 'rb') as file:
     model = pickle.load(file)
 
