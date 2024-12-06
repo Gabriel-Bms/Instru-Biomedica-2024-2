@@ -17,7 +17,7 @@ from hrvanalysis import get_geometrical_features, get_poincare_plot_features
 from hrvanalysis import get_sampen, get_time_domain_features
 
 
-st.set_page_config(page_title="main", layout="wide")
+st.set_page_config(page_title="main", layout="wide",initial_sidebar_state="collapsed",)
 firebase_url = "https://esp32-ib-default-rtdb.firebaseio.com/testeo.json"
 with open("model_xgb_new.pkl", 'rb') as file:
     model = pickle.load(file)
@@ -111,22 +111,23 @@ def calculate_features(a):
 
     return features
 
+def set_background(image_url):
+    st.markdown(f"""
+        <style>
+        .stApp {{
+            background-image: url("{image_url}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }}
+        </style>
+        """, unsafe_allow_html=True)
+
 def main_page():
     file_id = "190ygOr_J1pqLwvTAXkHMDNyd7Qi5rjS1"
     url = f"https://drive.google.com/uc?export=view&id={file_id}"
     response = requests.get(url)
-    # Fondo personalizado
-    st.markdown("""
-        <style>
-        .stApp {
-            background-image: url("https://img.freepik.com/free-vector/white-abstract-wallpaper_23-2148830027.jpg?t=st=1733431935~exp=1733435535~hmac=7a1d6c26a9eaf01430a8158fd41328553c361e432a078ca188b6ec9f7952d15f&w=996");
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
-        </style>
-        """, unsafe_allow_html=True)
-    st.markdown('<div class="main-background">', unsafe_allow_html=True)
+    set_background("https://img.freepik.com/free-vector/white-abstract-wallpaper_23-2148830027.jpg?t=st=1733431935~exp=1733435535~hmac=7a1d6c26a9eaf01430a8158fd41328553c361e432a078ca188b6ec9f7952d15f&w=996")
     
     st.markdown("""
         <style>
@@ -134,11 +135,11 @@ def main_page():
         @import url('https://fonts.googleapis.com/css2?family=Bree+Serif&family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet');
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet');
         .title {
-            font-size: 80px;
+            font-size: 75px;
             font-family: 'Poppins', sans-serif; 
             color: #FD5901;
             text-align: left;
-            font-weight: 800; 
+            font-weight: 600; 
             margin-bottom: 5px;
         }
         .subtitle {
@@ -173,6 +174,13 @@ def main_page():
     
 
 def visualize_page():
+    st.markdown("""
+        <style>
+        .stApp {
+            background-color: #0f1314
+        }
+        </style>
+        """, unsafe_allow_html=True)
     # Inicializar variables de estado para la gráfica
     if "x_data" not in st.session_state:
         st.session_state["x_data"] = []
@@ -191,7 +199,7 @@ def visualize_page():
     # Configuración de la gráfica
     window_size = 400
     derivada_opcion = st.selectbox(
-        "Seleccione la derivada que desea visualizar:",
+        "Seleccione la derivada",
         options=["Primera Derivada", "Segunda Derivada", "Tercera Derivada"],
         index=0
     )
@@ -222,9 +230,10 @@ def visualize_page():
 
                 # Crear y actualizar la gráfica
                 fig = go.Figure(
-                    data=[go.Scatter(x=st.session_state["x_data"], y=st.session_state["y_data"], mode="lines+markers", name="Real-Time Data")]
+                    data=[go.Scatter(x=st.session_state["x_data"], y=st.session_state["y_data"], mode="lines", name="Real-Time Data",line=dict(color="#39FF14", width=2))]
                 )
                 fig.update_layout(
+                    plot_bgcolor = "#000000",paper_bgcolor = "#000000",
                     xaxis=dict(range=[st.session_state["x_data"][0], st.session_state["x_data"][-1]], title="Point Index"),
                     yaxis=dict(range=[min(st.session_state["y_data"]) - 0.5, max(st.session_state["y_data"]) + 0.5], title="Value"),
                     title=f"{derivada_opcion} de su EKG | BPM: {bpm}",
@@ -365,6 +374,12 @@ def signup_page():
             st.session_state["page"] = "Login"
 
 # Inicializar variables de sesion
+if "authentication_status" not in st.session_state:
+    st.session_state["authentication_status"] = None
+if "users" not in st.session_state:
+    st.session_state["users"] = {"admin": "admin123"}  # Usuario por defecto
+if "page" not in st.session_state:
+    st.session_state["page"] = "Inicio"  # Página predeterminada
 if "grabando" not in st.session_state:
     st.session_state["grabando"] = False
 if "datos_grabados" not in st.session_state:
@@ -379,7 +394,7 @@ selected = option_menu(
     orientation="horizontal",
     styles={
         "container": {"padding": "0.5rem", "background-color": "#005F60","width": "100%"},
-        "nav-link-selected": {"background-color": "#fb8b24", "color": "#faf0e6"},  
+        "nav-link-selected": {"background-color": "#fb8b24", "color": "#000000"},  
     },
 )
 # Actualización de la página actual basada en selección
